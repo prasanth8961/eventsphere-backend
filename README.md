@@ -48,7 +48,7 @@ The backend API for **Events-Sphere**, a smart event management and booking plat
 ### Clone the Repository
 
 ```bash
-git clone https://github.com/Events-Sphere/backend-eventsphere.git
+git clone https://github.com/prasanth8961/backend-eventsphere.git
 cd backend-eventsphere
 ```
 
