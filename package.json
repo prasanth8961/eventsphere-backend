@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
-    "prod": "NODE_ENV=production node ./dist/index.js",
-    "staging": "NODE_ENV=staging node ./dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
+    "start": "node dist/index.js",
     "vercel-build": "npm run build",
-    "start": "node ./dist/index.js",
+    "prod": "NODE_ENV=PROD nodemon ./src/index.ts",
+    "staging": "",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "user": "ts-node ./src/Utililes/seeders/user/userSeeder.ts",
     "organizer": "ts-node ./src/Utililes/seeders/organizer/organizerSeeder.ts",
     "eventCategory": "ts-node ./src/Utililes/seeders/eventCategory/eventCategorySeeder.ts"
