@@ -3,13 +3,20 @@
     "target": "es2016",
     "module": "commonjs",
     "rootDir": "./src",
-    "outDir": "./dist",
+    "outDir": "dist",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "typeRoots": ["./node_modules/@types", "./src/types"]
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ]
   },
-  "include": ["index.ts", "src/**/*.ts", "src/types/express.d.ts"]
+  "include": [
+    "index.ts",
+    "src/**/*.ts",
+    "src/types/express.d.ts"
+  ]
 }
