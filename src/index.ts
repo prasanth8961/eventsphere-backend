@@ -1,4 +1,4 @@
-import express, { Application , Request, Router } from "express";
+import express, { Application, Request, Router } from "express";
 import * as dotenv from "dotenv";
 import cors from "cors";
 import V1 from "./v1/v1";
@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 
 const ENVIRONMENT = process.env.NODE_ENV || 3000;
-const corseOptions = {origin: "*"};
+const corseOptions = { origin: "https://eventsphere-admin-panel.vercel.app/" };
 
 app.use(express.static("public"));
 
@@ -27,9 +27,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors(corseOptions));
 
 
-app.get("/", async(_, res) => {
+app.get("/", async (_, res) => {
   res.send({
-    version : '1.0.0'
+    version: '1.0.0'
   })
 });
 
@@ -37,11 +37,11 @@ app.get("/", async(_, res) => {
 app.use("/auth", AuthRouter);
 // impement verfytoken here
 //app.use("/api/v1", verifyToken , V1);
-app.use("/api/v1" , V1);
+app.use("/api/v1", V1);
 
 
 app.all("*", (req, res, next) => {
-  ApiResponseHandler.notFound(res, `URL ${req.path} not found` , 404);
+  ApiResponseHandler.notFound(res, `URL ${req.path} not found`, 404);
 });
 app.use(errorHandler);
 
@@ -50,9 +50,9 @@ connectToDatabase();
 
 app.listen(Number(PORT), () => {
   const serverInfo = `\n------------------------------------------\n` +
-  `🚀 Server is up and running!\n` +
-  `🌐 URL: http://localhost:${PORT}\n` +
-  `🌍 Environment: ${ENVIRONMENT}\n` +
-  `------------------------------------------\n`;
-console.log(serverInfo);
+    `🚀 Server is up and running!\n` +
+    `🌐 URL: http://localhost:${PORT}\n` +
+    `🌍 Environment: ${ENVIRONMENT}\n` +
+    `------------------------------------------\n`;
+  console.log(serverInfo);
 });

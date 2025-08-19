@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const fileUploadMiddleware_1 = require("../Middleware/fileUploadMiddleware");
+const authenticateUserMiddleware_1 = __importDefault(require("../Middleware/authenticateUserMiddleware"));
+const eventModel_1 = __importDefault(require("../models/eventModel"));
+const userModel_1 = __importDefault(require("../models/userModel"));
+const router = (0, express_1.Router)();
+const event = new eventModel_1.default();
+const user = new userModel_1.default();
+const authenticate = new authenticateUserMiddleware_1.default();
+const fileUploadInstance = new fileUploadMiddleware_1.FileUploadMiddleware();
+router.get("/profile", authenticate.verifyToken, authenticate.isOrganizerHaveAccess, user.getUserProfileByRoleAndId);
+router.get("/dashboard/overview", event.getDashboardOverview);
+router.post("/event/create", authenticate.verifyToken, authenticate.isOrganizerHaveAccess, fileUploadInstance.middleware(), event.createEvent);
+router.get("/events/search", authenticate.verifyToken, authenticate.isOrganizerHaveAccess, event.searchEvents);
+router.get("/events/active", authenticate.verifyToken, authenticate.isOrganizerHaveAccess, event.getAllActiveEventsByOrganizerId);
+router.get("/events/pending", authenticate.verifyToken, authenticate.isOrganizerHaveAccess, event.getAllPendingEventsByOrganizerId);
+router.get("/events/rejected", authenticate.verifyToken, authenticate.isOrganizerHaveAccess, event.getAllRejectedEventsByOrganizerId);
+router.get("/events/completed", authenticate.verifyToken, authenticate.isOrganizerHaveAccess, event.getAllCompletedEventsByOrganizerId);
+exports.default = router;
