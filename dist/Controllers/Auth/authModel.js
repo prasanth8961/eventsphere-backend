@@ -238,7 +238,7 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.signup = signup;
 const organizerSignup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _d, _e;
     try {
         const userData = req.body.data ? JSON.parse(req.body.data) : req.body;
         const requiredFields = [
@@ -261,11 +261,11 @@ const organizerSignup = (req, res) => __awaiter(void 0, void 0, void 0, function
             return apiResponseMiddleware_1.ApiResponseHandler.warning(res, "Password must include uppercase, symbol, and number", null, 400);
         }
         const isUserExists = yield authInstance.isUserExistsOnMobileOrEmail(userData.email, userData.mobile);
-        if (!isUserExists.status || ((_a = isUserExists.data) === null || _a === void 0 ? void 0 : _a.length) > 0) {
+        if (!isUserExists.status || ((_d = isUserExists.data) === null || _d === void 0 ? void 0 : _d.length) > 0) {
             return apiResponseMiddleware_1.ApiResponseHandler.warning(res, "Email or Mobile already in use", null, 409);
         }
         const isOrgCodeExists = yield authInstance.isOrganizationCodeExists(userData.collegeCode);
-        if (!isOrgCodeExists.status || ((_b = isOrgCodeExists.data) === null || _b === void 0 ? void 0 : _b.length) > 0) {
+        if (!isOrgCodeExists.status || ((_e = isOrgCodeExists.data) === null || _e === void 0 ? void 0 : _e.length) > 0) {
             return apiResponseMiddleware_1.ApiResponseHandler.warning(res, "Organization code already in use", null, 409);
         }
         const files = req.files;
@@ -327,7 +327,7 @@ const validateSession = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.validateSession = validateSession;
 //VERIFY-USER-IDENTITY ENDPOINT--> http://localhost:3000/
 const verifyUserIdentity = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _f;
     try {
         const userData = JSON.parse(req.body.data);
         const user = req.user;
@@ -435,7 +435,7 @@ const verifyUserIdentity = (req, res) => __awaiter(void 0, void 0, void 0, funct
         }
         const profileUploadedResponse = yield Storage_1.FirebaseStorage.uploadSingleImage(`USERS/PROFILE`, imageList.profile);
         if (profileUploadedResponse.status === false) {
-            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_a = profileUploadedResponse.message) !== null && _a !== void 0 ? _a : "failed to upload Profile . try again!", 500);
+            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_f = profileUploadedResponse.message) !== null && _f !== void 0 ? _f : "failed to upload Profile . try again!", 500);
         }
         const proofImgUploadedResponse = yield Storage_1.FirebaseStorage.uploadCoverImages(`USERS/PROOF`, imageList.proof);
         if (proofImgUploadedResponse.status === false) {

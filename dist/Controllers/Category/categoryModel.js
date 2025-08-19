@@ -46,7 +46,7 @@ const createCategory = (req, res) => __awaiter(void 0, void 0, void 0, function*
 });
 exports.createCategory = createCategory;
 const updateCategoryByID = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _b;
     try {
         const { data: bodyData, file: categoryImageFile } = req.body;
         if (!bodyData || (!bodyData.name && !categoryImageFile)) {
@@ -67,7 +67,7 @@ const updateCategoryByID = (req, res) => __awaiter(void 0, void 0, void 0, funct
             _id: bodyData._id,
             name: bodyData.name,
             image: imageUrl,
-            is_enable: (_a = bodyData.is_enable) !== null && _a !== void 0 ? _a : 1,
+            is_enable: (_b = bodyData.is_enable) !== null && _b !== void 0 ? _b : 1,
         };
         const response = yield categoryInstance.updateCategory(categoryUpdatedData);
         if (!response.status) {
@@ -119,10 +119,10 @@ const getCategoryById = (req, res) => __awaiter(void 0, void 0, void 0, function
 });
 exports.getCategoryById = getCategoryById;
 const getAllCategories = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _c;
     try {
         const response = yield categoryInstance.getAllCategories();
-        return apiResponseMiddleware_1.ApiResponseHandler.success(res, (_a = response.data) !== null && _a !== void 0 ? _a : [], messages_1.COMMON_MESSAGES.CATEGORIES_FETCHED, 200);
+        return apiResponseMiddleware_1.ApiResponseHandler.success(res, (_c = response.data) !== null && _c !== void 0 ? _c : [], messages_1.COMMON_MESSAGES.CATEGORIES_FETCHED, 200);
     }
     catch (error) {
         return apiResponseMiddleware_1.ApiResponseHandler.error(res, messages_1.COMMON_MESSAGES.SERVER_ERROR, 500);

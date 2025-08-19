@@ -67,12 +67,12 @@ class UserFavouriteEventClass {
             return updatedFavorites;
         });
         this.getFavoriteEventList = (userId, next) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
+            var _b;
             const [user] = yield this.isUserExistsOnId(userId);
             if (!user) {
                 return next(new customError_1.default("User not found.", 401));
             }
-            const favoriteEventIds = user.favorite_events ? JSON.parse((_a = user.favorite_events) !== null && _a !== void 0 ? _a : []) : [];
+            const favoriteEventIds = user.favorite_events ? JSON.parse((_b = user.favorite_events) !== null && _b !== void 0 ? _b : []) : [];
             console.log(favoriteEventIds);
             const events = yield (0, knex_1.default)("events").whereIn("_id", favoriteEventIds);
             const updatedFavorites = events.map((_a) => {

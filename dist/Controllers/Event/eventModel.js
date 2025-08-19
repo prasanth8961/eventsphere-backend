@@ -215,7 +215,7 @@ const createEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
 });
 exports.createEvent = createEvent;
 const updateEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _c;
     try {
         const { eventId, mainEventData, subEventsData } = req.body;
         const subEventsCoverFiles = req.body.files;
@@ -312,7 +312,7 @@ const updateEvent = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
         }
         const response = yield eventInstance.updateEvent(eventId, updatedMainEventData, updatedSubEvents, subEventIdsToDelete, existingSubEventIds, newSubEventIds);
         if (!response.status) {
-            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_a = response.message) !== null && _a !== void 0 ? _a : "Failed to update event", 500);
+            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_c = response.message) !== null && _c !== void 0 ? _c : "Failed to update event", 500);
         }
         return apiResponseMiddleware_1.ApiResponseHandler.success(res, { eventId, updatedMainEventData, updatedSubEvents }, "Event updated successfully.");
     }
@@ -636,9 +636,9 @@ const approveEvent = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.approveEvent = approveEvent;
 const getAllRejectedEventsList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _d;
     try {
-        if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.id)) {
+        if (!((_d = req.user) === null || _d === void 0 ? void 0 : _d.id)) {
             return apiResponseMiddleware_1.ApiResponseHandler.error(res, messages_1.COMMON_MESSAGES.AUTHENTICATION_FAILED, 401);
         }
         const response = yield eventInstance.getAllRejectedEventList();
@@ -669,9 +669,9 @@ const getAllRejectedEventsById = (req, res) => __awaiter(void 0, void 0, void 0,
 });
 exports.getAllRejectedEventsById = getAllRejectedEventsById;
 const getAllEventsList = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _e;
     try {
-        if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.id)) {
+        if (!((_e = req.user) === null || _e === void 0 ? void 0 : _e.id)) {
             return apiResponseMiddleware_1.ApiResponseHandler.error(res, messages_1.COMMON_MESSAGES.AUTHENTICATION_FAILED, 401);
         }
         const response = yield eventInstance.getAllEventList();

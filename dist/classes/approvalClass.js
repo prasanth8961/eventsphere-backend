@@ -38,7 +38,7 @@ class ApprovalClass {
             console.log(data);
             return data;
         });
-        this.approveOrRejectEvent = (_a) => __awaiter(this, [_a], void 0, function* ({ eventId, approveIds, rejectIds, reasons, orgId, approvedBy }) {
+        this.approveOrRejectEvent = ({ eventId, approveIds, rejectIds, reasons, orgId, approvedBy }) => __awaiter(this, void 0, void 0, function* () {
             const currentTime = formatDateAndTime_1.FormatDateAndTime.getCurrentTimestamp();
             if ((approveIds === null || approveIds === void 0 ? void 0 : approveIds.length) > 0) {
                 yield (0, knex_1.default)("subevents")

@@ -180,7 +180,7 @@ class UserClass {
                             select("*").where("_id", user._id);
                         delete organization._id;
                         if (status == "pending") {
-                            const _a = this.sanitiseAndFormatUser(user), { approvedBy, approvedAt, requestedAt, denial_reason } = _a, remaining = __rest(_a, ["approvedBy", "approvedAt", "requestedAt", "denial_reason"]);
+                            const _c = this.sanitiseAndFormatUser(user), { approvedBy, approvedAt, requestedAt, denial_reason } = _c, remaining = __rest(_c, ["approvedBy", "approvedAt", "requestedAt", "denial_reason"]);
                             return Object.assign(Object.assign({}, remaining), { organizationData: {
                                     name: organization.name,
                                     code: organization.code,
@@ -191,7 +191,7 @@ class UserClass {
                             organization.pending_events = JSON.parse(organization.pending_events);
                             organization.active_events = JSON.parse(organization.active_events);
                             organization.completed_events = JSON.parse(organization.completed_events);
-                            const _b = this.sanitiseAndFormatUser(user), { requestedAt, denial_reason } = _b, remaining = __rest(_b, ["requestedAt", "denial_reason"]);
+                            const _d = this.sanitiseAndFormatUser(user), { requestedAt, denial_reason } = _d, remaining = __rest(_d, ["requestedAt", "denial_reason"]);
                             return Object.assign(Object.assign({}, remaining), { organizationData: organization });
                         }
                     })));

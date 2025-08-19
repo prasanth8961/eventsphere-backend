@@ -114,8 +114,8 @@ class EventModel {
             });
         }));
         this.getAllActiveEventsByOrganizerId = (0, errorMiddleware_1.default)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            const id = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+            var _b;
+            const id = (_b = req.user) === null || _b === void 0 ? void 0 : _b.id;
             if (!id)
                 return next(new customError_1.default("Id missing", 400));
             const events = yield event.getEventsByStatusAndOrganizerId("active", id);
@@ -126,8 +126,8 @@ class EventModel {
             });
         }));
         this.getAllCompletedEventsByOrganizerId = (0, errorMiddleware_1.default)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            const id = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+            var _c;
+            const id = (_c = req.user) === null || _c === void 0 ? void 0 : _c.id;
             if (!id)
                 return next(new customError_1.default("Id missing", 400));
             const events = yield event.getEventsByStatusAndOrganizerId("completed", id);
@@ -138,8 +138,8 @@ class EventModel {
             });
         }));
         this.getAllRejectedEventsByOrganizerId = (0, errorMiddleware_1.default)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            var _a;
-            const id = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+            var _d;
+            const id = (_d = req.user) === null || _d === void 0 ? void 0 : _d.id;
             if (!id)
                 return next(new customError_1.default("Id missing", 400));
             const events = yield event.getEventsByStatusAndOrganizerId("rejected", id);
@@ -150,7 +150,7 @@ class EventModel {
             });
         }));
         this.createEvent = (0, errorMiddleware_1.default)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c;
+            var _e, _f, _g;
             if (!req.body.data || !req.files) {
                 return next(new customError_1.default("Missing required data in the request. Please provide the necessary event information", 400));
             }
@@ -205,14 +205,14 @@ class EventModel {
                 return next(new customError_1.default("Cover Images are required", 400));
             }
             ;
-            const imageKeys = Object.keys((_a = imageList.sub_cover_images) !== null && _a !== void 0 ? _a : []);
+            const imageKeys = Object.keys((_e = imageList.sub_cover_images) !== null && _e !== void 0 ? _e : []);
             if (imageKeys.length !== data.sub_events.length) {
                 return next(new customError_1.default("Sub events cover Images are required", 400));
             }
             ;
             const imgUploadedResponse = yield Storage_1.FirebaseStorage.uploadSingleImage(`EVENTS/MAIN EVENT IMAGES`, mainImgFile);
             if (imgUploadedResponse.status === false) {
-                return next(new customError_1.default((_b = imgUploadedResponse.message) !== null && _b !== void 0 ? _b : "failed to upload main event images. try again!", 500));
+                return next(new customError_1.default((_f = imgUploadedResponse.message) !== null && _f !== void 0 ? _f : "failed to upload main event images. try again!", 500));
             }
             const coverImgUploadedResponse = yield Storage_1.FirebaseStorage.uploadCoverImages(`EVENTS/COVER IMAGES`, coverImgFiles);
             if (coverImgUploadedResponse.status === false) {
@@ -276,7 +276,7 @@ class EventModel {
             };
             const response = yield event.createEvent(mainEvents, subEventsData);
             console.log("main ebvent ID :" + response.eventId);
-            if (((_c = req.user) === null || _c === void 0 ? void 0 : _c.role) === "organizer") {
+            if (((_g = req.user) === null || _g === void 0 ? void 0 : _g.role) === "organizer") {
                 const updateOrganizerEventCount = yield event.updateOrganizationPendingEvent(mainEvents.org_id, response.eventId);
             }
             // if (!updateOrganizerEventCount.status) {
@@ -291,9 +291,9 @@ class EventModel {
             });
         }));
         this.searchEvents = (0, errorMiddleware_1.default)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            var _a, _b;
+            var _h, _j;
             const { query = "", eventType = "active_events" } = req.body;
-            if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.id))
+            if (!((_h = req.user) === null || _h === void 0 ? void 0 : _h.id))
                 return res.status(400).send({
                     success: false,
                     message: "Organizer ID missing"
@@ -308,7 +308,7 @@ class EventModel {
             if (!allowedTypes.includes(eventType)) {
                 return res.status(400).json({ success: false, message: "Invalid event type" });
             }
-            const events = yield event.searchEvents((_b = req.user) === null || _b === void 0 ? void 0 : _b.id, query.trim(), eventType);
+            const events = yield event.searchEvents((_j = req.user) === null || _j === void 0 ? void 0 : _j.id, query.trim(), eventType);
             return res.status(200).json({
                 success: true,
                 data: events,
@@ -316,12 +316,12 @@ class EventModel {
             });
         }));
         this.getDashboardOverview = (0, errorMiddleware_1.default)((req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            var _a, _b, _c;
+            var _k, _l, _m;
             req.user = { id: 21, role: "organizer" };
-            if (!((_a = req.user) === null || _a === void 0 ? void 0 : _a.id) || typeof ((_b = req.user) === null || _b === void 0 ? void 0 : _b.id) !== 'number') {
+            if (!((_k = req.user) === null || _k === void 0 ? void 0 : _k.id) || typeof ((_l = req.user) === null || _l === void 0 ? void 0 : _l.id) !== 'number') {
                 throw new Error("Invalid organization ID");
             }
-            const dashboardStat = yield event.getOrganizationDashboardStats((_c = req.user) === null || _c === void 0 ? void 0 : _c.id);
+            const dashboardStat = yield event.getOrganizationDashboardStats((_m = req.user) === null || _m === void 0 ? void 0 : _m.id);
             return res.status(200).send({
                 success: true,
                 data: dashboardStat,

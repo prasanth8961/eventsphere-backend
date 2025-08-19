@@ -94,7 +94,7 @@ class EventClass {
                 .update({ pending_events: updatedPendingEvents });
             return true;
         });
-        this.searchEvents = (orgId_1, query_1, ...args_1) => __awaiter(this, [orgId_1, query_1, ...args_1], void 0, function* (orgId, query, eventType = "active_events") {
+        this.searchEvents = (orgId, query, eventType = "active_events") => __awaiter(this, void 0, void 0, function* () {
             var _a;
             const response = yield (0, knex_1.default)("es_organizations")
                 .select(eventType)

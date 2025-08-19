@@ -312,7 +312,7 @@ class EventClass {
             }
         });
         // New York, USA
-        this.searchEventList = (_a) => __awaiter(this, [_a], void 0, function* ({ queryText, tempLocation, tempCategory, }) {
+        this.searchEventList = ({ queryText, tempLocation, tempCategory, }) => __awaiter(this, void 0, void 0, function* () {
             try {
                 console.log(queryText);
                 console.log(tempLocation);
@@ -509,7 +509,7 @@ class EventClass {
                 return { status: false, message: "An error occurred.", data: [] };
             }
         });
-        this.updateEventStatus = (_a) => __awaiter(this, [_a], void 0, function* ({ eventId, approveIds, rejectIds, reasons, orgId }) {
+        this.updateEventStatus = ({ eventId, approveIds, rejectIds, reasons, orgId }) => __awaiter(this, void 0, void 0, function* () {
             try {
                 if ((approveIds === null || approveIds === void 0 ? void 0 : approveIds.length) > 0) {
                     yield (0, knex_1.default)("subevents")

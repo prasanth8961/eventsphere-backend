@@ -131,14 +131,14 @@ exports.createBooking = createBooking;
 //   }
 // };
 const getUserPendingBookings = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _b, _c;
     try {
-        if (!req.user || !((_a = req.user) === null || _a === void 0 ? void 0 : _a.id)) {
+        if (!req.user || !((_b = req.user) === null || _b === void 0 ? void 0 : _b.id)) {
             return apiResponseMiddleware_1.ApiResponseHandler.error(res, messages_1.COMMON_MESSAGES.AUTH_ERROR, 401);
         }
         const response = yield bookingInstance.getPendingBookingList(Number(req.user.id));
         if (!response.status) {
-            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_b = response.message) !== null && _b !== void 0 ? _b : messages_1.COMMON_MESSAGES.NO_PENDING_BOOKINGS, 404);
+            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_c = response.message) !== null && _c !== void 0 ? _c : messages_1.COMMON_MESSAGES.NO_PENDING_BOOKINGS, 404);
         }
         return apiResponseMiddleware_1.ApiResponseHandler.success(res, response.data, "Pending bookings retrieved successfully.", 200);
     }
@@ -148,15 +148,15 @@ const getUserPendingBookings = (req, res) => __awaiter(void 0, void 0, void 0, f
 });
 exports.getUserPendingBookings = getUserPendingBookings;
 const getUserBookedEvents = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _d, _e;
     try {
-        if (!req.user || !((_a = req.user) === null || _a === void 0 ? void 0 : _a.id)) {
+        if (!req.user || !((_d = req.user) === null || _d === void 0 ? void 0 : _d.id)) {
             return apiResponseMiddleware_1.ApiResponseHandler.error(res, messages_1.COMMON_MESSAGES.AUTH_ERROR, 401);
         }
         const response = yield bookingInstance
             .getBookedEventsList(Number(req.user.id));
         if (!response.status) {
-            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_b = response.message) !== null && _b !== void 0 ? _b : messages_1.COMMON_MESSAGES.NO_BOOKED_EVENTS, 404);
+            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_e = response.message) !== null && _e !== void 0 ? _e : messages_1.COMMON_MESSAGES.NO_BOOKED_EVENTS, 404);
         }
         return apiResponseMiddleware_1.ApiResponseHandler.success(res, response.data, "Booked events retrieved successfully.", 200);
     }
@@ -166,14 +166,14 @@ const getUserBookedEvents = (req, res) => __awaiter(void 0, void 0, void 0, func
 });
 exports.getUserBookedEvents = getUserBookedEvents;
 const getUserCancelledBookings = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+    var _f, _g;
     try {
-        if (!req.user || !((_a = req.user) === null || _a === void 0 ? void 0 : _a.id)) {
+        if (!req.user || !((_f = req.user) === null || _f === void 0 ? void 0 : _f.id)) {
             return apiResponseMiddleware_1.ApiResponseHandler.error(res, messages_1.COMMON_MESSAGES.AUTH_ERROR, 401);
         }
         const response = yield bookingInstance.getCancelledBookings(Number(req.user.id));
         if (!response.status) {
-            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_b = response.message) !== null && _b !== void 0 ? _b : messages_1.COMMON_MESSAGES.NO_CANCELLED_BOOKINGS, 404);
+            return apiResponseMiddleware_1.ApiResponseHandler.error(res, (_g = response.message) !== null && _g !== void 0 ? _g : messages_1.COMMON_MESSAGES.NO_CANCELLED_BOOKINGS, 404);
         }
         return apiResponseMiddleware_1.ApiResponseHandler.success(res, response.data, "Cancelled bookings retrieved successfully.", 200);
     }
