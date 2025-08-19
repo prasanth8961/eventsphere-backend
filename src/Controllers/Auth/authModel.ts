@@ -149,6 +149,7 @@ export const adminLogin = async (req: Request, res: Response) => {
     }
     return ApiResponseHandler.success(res, accessToken, "Login Successful", 200);
   } catch (error) {
+    console.log(error)
     return ApiResponseHandler.error(res, "Internal server error", 501);
   }
 };
@@ -168,9 +169,9 @@ export const signup = async (req: Request, res: Response) => {
     //college code range check and duplicate check
 
     console.log("userData:");
-Object.entries(userData).forEach(([key, value]) => {
-  console.log(`${key}: ${value}`);
-});
+    Object.entries(userData).forEach(([key, value]) => {
+      console.log(`${key}: ${value}`);
+    });
 
 
     if (!userData.role) {
@@ -442,7 +443,7 @@ export const organizerSignup = async (req: Request, res: Response) => {
 };
 
 
-export const validateSession = async(req:Request, res:Response): Promise<any> => {
+export const validateSession = async (req: Request, res: Response): Promise<any> => {
   try {
     const authHeader: any = req.headers.authorization;
 
