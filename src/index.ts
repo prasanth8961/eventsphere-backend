@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 const ENVIRONMENT = process.env.NODE_ENV || 3000;
 
 const corseOptions = {
-  origin: "https://eventsphere-admin-panel.vercel.app",
+  origin: ["https://eventsphere-admin-panel.vercel.app"],
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }
