@@ -22,6 +22,9 @@ The backend API for **Events-Sphere**, a smart event management and booking plat
 
 ---
 
+## Live
+-- https://eventsphere-backend-3.onrender.com/
+
 ## Features
 
 * **User Authentication**: Secure login and registration with JWT tokens.
