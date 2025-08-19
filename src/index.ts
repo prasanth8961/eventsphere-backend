@@ -17,7 +17,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.urlencoded({ extended: true }));
 
 const ENVIRONMENT = process.env.NODE_ENV || 3000;
-const corseOptions = { origin: "https://eventsphere-admin-panel.vercel.app/" };
+const corseOptions = { origin: "*" };
 
 app.use(express.static("public"));
 
