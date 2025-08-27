@@ -1,12 +1,11 @@
 import admin from "firebase-admin";
-import serviceAccount from "../Config/firebase-config"
+import { serviceAccount } from "../Config/firebase-config"
 import * as dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
-
 dotenv.config();
 
 admin.initializeApp({
- credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
+  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
 });
 
@@ -26,16 +25,17 @@ export class FirebaseStorage {
         metadata: {
           contentType: file.mimetype,
           cacheControl: "public, max-age=31536000",
+          metadata: {
+            firebaseStorageDownloadTokens: uuidv4(),
+          },
         },
       });
 
-      const [url] = await firebaseFile.getSignedUrl({
-        action: "read",
-        
-        expires: "03-09-2030",
-      });
+      const url = `https://firebasestorage.googleapis.com/v0/b/${storage.name}/o/${encodeURIComponent(
+        uniqueFileName
+      )}?alt=media&token=${firebaseFile.metadata.metadata!.firebaseStorageDownloadTokens}`;
 
-      return { status: true, url: uniqueFileName };
+      return { status: true, url: url };
     } catch (error) {
       console.error(`Error uploading image file : `, error);
       return { status: false, message: "Failed to upload image" };
@@ -58,15 +58,18 @@ export class FirebaseStorage {
             metadata: {
               contentType: file.mimetype,
               cacheControl: "public, max-age=31536000",
+              metadata: {
+                firebaseStorageDownloadTokens: uuidv4(),
+              },
             },
           });
 
-          const [url] = await firebaseFile.getSignedUrl({
-            action: "read",
-            expires: "03-09-2030",
-          });
+          const url = `https://firebasestorage.googleapis.com/v0/b/${storage.name}/o/${encodeURIComponent(
+            uniqueFileName
+          )}?alt=media&token=${firebaseFile.metadata.metadata!.firebaseStorageDownloadTokens}`;
 
-          urls.push(uniqueFileName);
+
+          urls.push(url);
         })
       );
 
@@ -102,7 +105,7 @@ export class FirebaseStorage {
             expires: "03-09-2030",
           });
 
-          urls.push(uniqueFileName);
+          urls.push(url);
         })
       );
 

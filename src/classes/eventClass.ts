@@ -114,8 +114,6 @@ class EventClass {
     ) => {
         const [eventId] = await db(tableName.EVENTS)
             .insert(mainEventData)
-        // .returning("_id");
-        console.log(`event ID : ${eventId}`)
         let subEventIds = [];
         for (let subEvent of subEventData) {
             subEvent.event_id = eventId;

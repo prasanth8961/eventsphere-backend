@@ -27,10 +27,10 @@ export class FileUploadMiddleware {
           );
         }
 
-        const MAX_FILE_SIZE = 15 * 1024 * 1024; 
-        const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf","application/octet-stream"];
+        const MAX_FILE_SIZE = 15 * 1024 * 1024;
+        const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "application/pdf", "application/octet-stream"];
 
-        
+
         const invalidFiles = files.filter(
           (file) => file.size > MAX_FILE_SIZE || !ALLOWED_MIME_TYPES.includes(file.mimetype)
         );
@@ -44,7 +44,7 @@ export class FileUploadMiddleware {
           );
         }
 
-        
+
         if (files.length === 1) {
           req.body.file = {
             fieldname: files[0].fieldname,

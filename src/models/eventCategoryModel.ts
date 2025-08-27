@@ -12,14 +12,15 @@ interface FileStorageResponse {
     message?: string;
     url?: any;
     urls?: any;
+
 }
 
 class EventCategoryModel {
 
     getAllCategories = catchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
-        const {limit = 10, search = "", page = 1 } = req.body;
-        const offset=(page-1)*10
-        const {categories,totalPage,totalRecords} = await eventCategory.getAllCategories(search,limit,offset);
+        const { limit = 10, search = "", page = 1 } = req.body;
+        const offset = (page - 1) * 10
+        const { categories, totalPage, totalRecords } = await eventCategory.getAllCategories(search, limit, offset);
         res.status(200).json({
             success: true,
             data: {
@@ -34,6 +35,7 @@ class EventCategoryModel {
 
     createCategory = catchAsyncError(
         async (req: Request, res: Response, next: NextFunction) => {
+
             const { categoryName, file: categoryImageFile } = req.body;
             if (!categoryName || !categoryImageFile) {
                 return next(new CustomError("Category name or file missing", 400))
@@ -49,6 +51,7 @@ class EventCategoryModel {
                     `categories/CATEGORY IMAGES`,
                     categoryImageFile
                 );
+            Object.keys(imgUploadedResponse).map((x) => console.log(x + "\n"));
             if (!imgUploadedResponse.status) {
                 return next(new CustomError(imgUploadedResponse.message ?? "Failed to upload category image."))
             }
@@ -58,10 +61,10 @@ class EventCategoryModel {
                 is_enable: 1,
             };
             const response = await eventCategory.createCategory(categoryData);
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
                 data: null,
-                message: "Category created successfully"
+                message: "Category is created successfully"
             })
         }
     );

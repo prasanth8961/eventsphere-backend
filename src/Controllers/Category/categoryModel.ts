@@ -17,9 +17,9 @@ interface FileStorageResponse {
 
 export const createCategory = async (req: Request, res: Response) => {
   try {
-    const { categoryName,file:categoryImageFile } = req.body;
+    const { categoryName, file: categoryImageFile } = req.body;
     console.log(req.body.categoryName);
-console.log({name: categoryName, file: categoryImageFile })
+    console.log({ name: categoryName, file: categoryImageFile })
     if (!categoryName || !categoryImageFile) {
       return ApiResponseHandler.error(
         res,
@@ -113,7 +113,7 @@ export const updateCategoryByID = async (req: Request, res: Response) => {
       is_enable: bodyData.is_enable ?? 1,
     };
 
-    const response : any = await categoryInstance.updateCategory(categoryUpdatedData);
+    const response: any = await categoryInstance.updateCategory(categoryUpdatedData);
 
     if (!response.status) {
       return ApiResponseHandler.error(

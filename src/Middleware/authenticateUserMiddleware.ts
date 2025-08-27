@@ -6,7 +6,7 @@ import db from "../Config/knex";
 import catchAsyncError from "./errorMiddleware";
 import CustomError from "../Utililes/customError";
 import { tableName } from "../tables/table";
- class AuthenticateUser {
+class AuthenticateUser {
   // static async verifyToken(req: Request, res: Response, next: NextFunction) {
   //   try {
   //     const token = req.headers["authorization"];
@@ -75,13 +75,13 @@ import { tableName } from "../tables/table";
     if (!user?.id || !user?.role) {
       return ApiResponseHandler.error(res, "Token invalid", 401);
     }
-    if(user.role == "squad"){
-      const isSquad = await db.select("*").from("users").where({ _id: user.id }).andWhere({role:user.role});
+    if (user.role == "squad") {
+      const isSquad = await db.select("*").from("users").where({ _id: user.id }).andWhere({ role: user.role });
       console.log(isSquad.length)
-    if (isSquad.length <= 0) {
-      return ApiResponseHandler.error(res, "squard not found", 401);
-    } 
-     return next();
+      if (isSquad.length <= 0) {
+        return ApiResponseHandler.error(res, "squard not found", 401);
+      }
+      next();
     }
     return next(new CustomError("you not have access to use this route", 401))
   })
@@ -101,7 +101,7 @@ import { tableName } from "../tables/table";
       if (admin.length <= 0) {
         return next(new CustomError("Admin not found", 404))
       }
-    return next();
+      return next();
     }
     return next(new CustomError("you not have access to use this route", 401))
 
