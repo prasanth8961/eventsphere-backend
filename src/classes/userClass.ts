@@ -7,21 +7,18 @@ import { tableName } from "../tables/table";
 
 export class UserClass {
 
-  private fetchUsersByRole = async (role: string, status: string[], limit: number,offset:number,search:string) => {
+  private fetchUsersByRole = async (role: string, status: string[], limit: number, offset: number, search: string) => {
 
-    const query = db(tableName.USERS).where({role:role});
+    const query = db(tableName.USERS).where({ role: role });
 
-    
-
-      
     if (status.includes("verified") || status.includes("rejected") || status.includes("active") || status.includes("inactive") || status.includes("pending")) {
       query.whereIn("status", status)
     }
-    if(search){
-      query.andWhere("name","like",`%${search}%`)
+    if (search) {
+      query.andWhere("name", "like", `%${search}%`)
     }
 
-    const [{count}]=await query.clone().count("* as count");
+    const [{ count }] = await query.clone().count("* as count");
 
     const users = await query.select('_id',
       'name',
@@ -42,10 +39,11 @@ export class UserClass {
       'longitude',
       'latitude',
       'status').offset(offset).limit(limit);
+
     return {
-      totalRecords:Number(count),
-      totalPage:Math.ceil(Number(count)/limit),
-      users:users
+      totalRecords: Number(count),
+      totalPage: Math.ceil(Number(count) / limit),
+      users: users
     };
   }
 
@@ -98,9 +96,13 @@ export class UserClass {
     delete user.password;
     delete user.profile;
 
-    if (user.proof && user.proof != undefined && user.proof != null) {
+    try {
       user.proof = JSON.parse(user.proof);
+    } catch (err) {
+      console.error("Invalid JSON in proof:", user.proof);
+      user.proof = [];
     }
+
     return user;
   }
   public isUserExistsOnId = async (
@@ -126,22 +128,22 @@ export class UserClass {
     return results;
   };
 
-  getUserById = async (id : number)=>{
-    const result : any[] = await db.select("*").from(tableName.USERS).where("_id", id);
+  getUserById = async (id: number) => {
+    const result: any[] = await db.select("*").from(tableName.USERS).where("_id", id);
     return result;
   }
   public getUsersByRole = async (
     role: string,
     status: string[],
-    search:string,
-    offset:number,
-    limit:number
+    search: string,
+    offset: number,
+    limit: number
   ) => {
     let data: any = {};
     switch (role) {
       case "user":
-        const userResponse: any = await this.fetchUsersByRole(role, status,limit,offset,search); 
-       const userData = await Promise.all(
+        const userResponse: any = await this.fetchUsersByRole(role, status, limit, offset, search);
+        const userData = await Promise.all(
           userResponse.users.map(async (user: any) => {
             const bookings = await db(tableName.EVENTBOOKINGS).
               select("*").whereIn("_id", user.bookings == null ? [] : JSON.parse(user.bookings));
@@ -156,16 +158,16 @@ export class UserClass {
             }
           })
         );
-        data={
-          users : userData,
-          totalPage:userResponse.totalPage,
-          totalRecords:userResponse.totalRecords
+        data = {
+          users: userData,
+          totalPage: userResponse.totalPage,
+          totalRecords: userResponse.totalRecords
         }
         break;
       case "organizer":
-        const organizerResponse:any = await this.fetchUsersByRole(role, status,limit,offset,search);
+        const organizerResponse: any = await this.fetchUsersByRole(role, status, limit, offset, search);
         console.log(organizerResponse.users)
-       const organizerData = await Promise.all(
+        const organizerData = await Promise.all(
           organizerResponse.users.map(async (user: any) => {
             const organization = await db(tableName.ORGANIZATIONS).
               select("*").where("_id", user._id);
@@ -181,25 +183,25 @@ export class UserClass {
             }
           })
         );
-        data={
-          organizers : organizerData,
-          totalPage:organizerResponse.totalPage,
-          totalRecords:organizerResponse.totalRecords
+        data = {
+          organizers: organizerData,
+          totalPage: organizerResponse.totalPage,
+          totalRecords: organizerResponse.totalRecords
         }
         break;
       case "squad":
-        const squadResponse: any = await this.fetchUsersByRole(role, status,limit,offset,search);
-       const squadData = await Promise.all(
+        const squadResponse: any = await this.fetchUsersByRole(role, status, limit, offset, search);
+        const squadData = await Promise.all(
           squadResponse.users.map(async (user: any) => {
             return {
               ...this.sanitiseAndFormatUser(user),
             }
           })
         );
-        data={
-          squads : squadData,
-          totalPage:squadResponse.totalPage,
-          totalRecords:squadResponse.totalRecords
+        data = {
+          squads: squadData,
+          totalPage: squadResponse.totalPage,
+          totalRecords: squadResponse.totalRecords
         }
         break;
 
@@ -207,7 +209,7 @@ export class UserClass {
         data = {}
         break;
     }
-    console.log("DATA : "+data.totalPage)
+    console.log("DATA : " + data.totalPage)
     return data;
   }
 
@@ -223,7 +225,7 @@ export class UserClass {
       case "user":
         console.log(role + ":" + status)
         const users: any = await this.fetchUsersByRoleAndStatus(role, status);
-       // limit,offset,search
+        // limit,offset,search
         console.log(users)
         data = await Promise.all(
           users.map(async (user: any) => {
